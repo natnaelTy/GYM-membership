@@ -1,6 +1,6 @@
 import { pool } from "../database/mysqlsb.js";
 import bcrypt from "bcryptjs";
-
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 
 export const signup = async (req, res) => {
@@ -35,9 +35,16 @@ export const signup = async (req, res) => {
 
           const user = {full_name, phone_number, gender};
           //Get inserted user id
-          const userid = result.insertId;
+          const userId = result.insertId;
 
-          return res.status(201).json({success: true, message: "User created successfully!", ...user});
+          const token = generateTokenAndSetCookie(res, userId, full_name, phone_number);
+
+          return res.status(201).json({success: true, 
+                                       message: "User created successfully!", 
+                                       user: {
+                                        ...user,
+                                        token,
+                                       }});
         })
       }
     });
