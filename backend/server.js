@@ -4,7 +4,6 @@ import route from "./routes/auth-route.js";
 
 const app = express();
 
-
 app.use(express.json());
 
 const PORT = 5000 || 3000;
