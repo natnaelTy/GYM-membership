@@ -36,7 +36,7 @@ export const register =  async (req, res) => {
             res.status(500).json({success: false, message: "Database error"});
           }
 
-          const user = {full_name, phone_number, gender};
+          const user = {full_name, phone_number, gender, image};
           //Get inserted user id
           const userId = result.insertId;
 
@@ -103,11 +103,10 @@ export const logout = async (_, res) => {
 
   // delete the user from database
   const deleteQuery = "DELETE FROM users WHERE phone_number = 0975348825 ";
-  pool.query(deleteQuery, (error, result) => {
+  pool.query(deleteQuery, (error, _) => {
     if(error){
       console.log(`Error occured in database while deleting user ${error}`);
       return res.status(500).send("Server Error");
     }
-  
   })
 }
